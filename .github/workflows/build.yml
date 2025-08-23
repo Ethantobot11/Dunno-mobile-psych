@@ -20,8 +20,8 @@ on:
         type: string
 
 env:
-  HAXE_VERSION: 4.3.2
-  PROJECT_NAME: PsychEngine
+  HAXE_VERSION: 4.3.7
+  PROJECT_NAME: PsychEngine 0.7.3
 
 jobs:
   build:
