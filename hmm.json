@@ -44,11 +44,11 @@
       "url": "https://github.com/HomuHomu833/hxcpp"
     },
     {
-      "name": "hxvlc",
+      "name": "hxCodec",
       "type": "git",
       "dir": null,
       "ref": "main",
-      "url": "https://github.com/th2l-devs/hxvlc"
+      "url": "https://github.com/polybiusproxy/hxCodec"
     },
     {
       "name": "SScript",
