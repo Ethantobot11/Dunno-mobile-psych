@@ -144,7 +144,7 @@ enum abstract StorageType(String) from String to String
 		final INTERNAL = AndroidEnvironment.getInternalStorageDirectory() + 'Android/Data' + lime.app.Application.current.meta.get('packageName');
 
 		return switch (str)
-		{;
+		{
 			case "INTERNAL": INTERNAL;
 			default: StorageUtil.getInternalDirectory(str) + 'Android/Data' + packageNameLocal;
 		}
