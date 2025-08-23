@@ -10,7 +10,7 @@
     {
       "name": "openfl",
       "type": "git",
-      "dir": null
+      "dir": null,
       "ref": "develop",
       "url": "https://github.com/th2l-devs/openfl"
     },
