@@ -106,7 +106,7 @@ class StorageUtil
 		}
 	}
 
-	public static function checkExternalPaths(?splitStorage = false):Array<String>
+	public static function checkInternalPaths(?splitStorage = false):Array<String>
 	{
 		var process = new Process('grep -o "/storage/....-...." /proc/mounts | paste -sd \',\'');
 		var paths:String = process.stdout.readAll().toString();
@@ -115,11 +115,11 @@ class StorageUtil
 		return paths.split(',');
 	}
 
-	public static function getExternalDirectory(externalDir:String):String
+	public static function getInternalDirectory(internalDir:String):String
 	{
 		var daPath:String = '';
-		for (path in checkExternalPaths())
-			if (path.contains(externalDir))
+		for (path in checkInternalPaths())
+			if (path.contains(internalDir))
 				daPath = path;
 
 		daPath = Path.addTrailingSlash(daPath.endsWith("\n") ? daPath.substr(0, daPath.length - 1) : daPath);
@@ -134,50 +134,30 @@ class StorageUtil
 enum abstract StorageType(String) from String to String
 {
 	final forcedPath = '/storage/emulated/0/';
-	final packageNameLocal = 'com.shadowmario.psychengine073';
-	final fileLocal = 'PsychEngine';
+	final packageNameLocal = 'com.pibbyapocalypse.pibbyengine073';
+	final fileLocal = 'PsychEngine 0.7.3';
 
-	var EXTERNAL_DATA = "EXTERNAL_DATA";
-	var EXTERNAL_OBB = "EXTERNAL_OBB";
-	var EXTERNAL_MEDIA = "EXTERNAL_MEDIA";
-	var EXTERNAL = "EXTERNAL";
-	var EXTERNAL_GLOBAL = "EXTERNAL_GLOBAL";
+	var INTERNAL = "INTERNAL";
 
 	public static function fromStr(str:String):StorageType
 	{
-		final EXTERNAL_DATA = AndroidContext.getExternalFilesDir();
-		final EXTERNAL_OBB = AndroidContext.getObbDir();
-		final EXTERNAL_MEDIA = AndroidEnvironment.getExternalStorageDirectory() + '/Android/media/' + lime.app.Application.current.meta.get('packageName');
-		final EXTERNAL = AndroidEnvironment.getExternalStorageDirectory() + '/.' + lime.app.Application.current.meta.get('file') + '0.7.3';
-		final EXTERNAL_GLOBAL = AndroidEnvironment.getExternalStorageDirectory() + '/.' + lime.app.Application.current.meta.get('file');
+		final INTERNAL = AndroidEnvironment.getInternalStorageDirectory() + 'Android/Data' + lime.app.Application.current.meta.get('packageName');
 
 		return switch (str)
-		{
-			case "EXTERNAL_DATA": EXTERNAL_DATA;
-			case "EXTERNAL_OBB": EXTERNAL_OBB;
-			case "EXTERNAL_MEDIA": EXTERNAL_MEDIA;
-			case "EXTERNAL": EXTERNAL;
-			case "EXTERNAL_GLOBAL": EXTERNAL_GLOBAL;
-			default: StorageUtil.getExternalDirectory(str) + '.' + fileLocal;
+		{;
+			case "INTERNAL": INTERNAL;
+			default: StorageUtil.getInternalDirectory(str) + 'Android/Data' + packageNameLocal;
 		}
 	}
 
 	public static function fromStrForce(str:String):StorageType
 	{
-		final EXTERNAL_DATA = forcedPath + 'Android/data/' + packageNameLocal + '/files';
-		final EXTERNAL_OBB = forcedPath + 'Android/obb/' + packageNameLocal;
-		final EXTERNAL_MEDIA = forcedPath + 'Android/media/' + packageNameLocal;
-		final EXTERNAL = forcedPath + '.' + fileLocal + '0.7.3';
-		final EXTERNAL_GLOBAL = forcedPath + '.' + fileLocal;
+		final INTERNAL = forcedPath + 'Android/Data' + packageNameLocal;
 
 		return switch (str)
 		{
-			case "EXTERNAL_DATA": EXTERNAL_DATA;
-			case "EXTERNAL_OBB": EXTERNAL_OBB;
-			case "EXTERNAL_MEDIA": EXTERNAL_MEDIA;
-			case "EXTERNAL": EXTERNAL;
-			case "EXTERNAL_GLOBAL": EXTERNAL_GLOBAL;
-			default: StorageUtil.getExternalDirectory(str) + '.' + fileLocal;
+			case "INTERNAL": INTERNAL;
+			default: StorageUtil.getInternalDirectory(str) + 'Android/Data'+ packageNameLocal;
 		}
 	}
 }
