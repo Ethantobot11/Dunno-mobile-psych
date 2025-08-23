@@ -6,8 +6,8 @@ permissions:
   discussions: write
 
 env:
-  PROJECT_NAME: PsychEngine
-  REPO_PATH: MobilePorting/FNF-PsychEngine-0.7.3-Mobile
+  PROJECT_NAME: PsychEngine 0.7.3
+  REPO_PATH: Ethantobot11/Dunno-mobile-psych
 
 jobs:
   get-commit-hash:
@@ -85,7 +85,7 @@ jobs:
         with:
           name: "DevBuild ${{ needs.get-commit-hash.outputs.commit_hash }}"
           tag_name: "devbuild-${{ needs.get-commit-hash.outputs.commit_hash }}"
-          prerelease: true
+          lastrelease: false
           files: |
             /home/runner/*.apk
             /home/runner/*.zip
