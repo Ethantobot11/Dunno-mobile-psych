@@ -5,7 +5,7 @@
       "type": "git",
       "dir": null,
       "ref": "main",
-      "url": "https://github.com/th2l-devs/lime"
+      "url": "https://github.com/HomuHomu833/lime"
     },
     {
       "name": "openfl",
@@ -17,7 +17,7 @@
       "type": "git",
       "dir": null,
       "ref": "main",
-      "url": "https://github.com/th2l-devs/flixel"
+      "url": "https://github.com/HomuHomu833/flixel"
     },
     {
       "name": "flixel-addons",
@@ -38,8 +38,8 @@
       "name": "hxcpp",
       "type": "git",
       "dir": null,
-      "ref": "master",
-      "url": ""
+      "ref": "main",
+      "url": "https://github.com/HomuHomu833/hxcpp"
     },
     {
       "name": "hxvlc",
@@ -53,7 +53,7 @@
       "type": "git",
       "dir": null,
       "ref": "main",
-      "url": "https://github.com/th2l-devs/SScript"
+      "url": "https://github.com/HomuHomu833/SScript"
     },
     {
       "name": "tjson",
