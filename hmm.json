@@ -5,12 +5,14 @@
       "type": "git",
       "dir": null,
       "ref": "main",
-      "url": "https://github.com/HomuHomu833/lime"
+      "url": "https://github.com/th2l-devs/lime"
     },
     {
       "name": "openfl",
-      "type": "haxelib",
-      "version": "9.3.3"
+      "type": "git",
+      "version": null
+      "ref": "develop",
+      "url": "https://github.com/th2l-devs/openfl"
     },
     {
       "name": "flixel",
