@@ -16,7 +16,7 @@ import states.TitleState;
 	public var screensaver:Bool = false;
 	public var wideScreen:Bool = false;
 	#if android
-	public var storageType:String = "EXTERNAL_DATA";
+	public var storageType:String = "EXTERNAL";
 	#end
 	public var hitboxType:String = "Gradient";
 	public var popUpRating:Bool = true;
@@ -152,7 +152,7 @@ class ClientPrefs {
 
 		'accept'		=> [A],
 		'back'			=> [B],
-		'pause'			=> [#if android NONE #else P #end],
+		'pause'			=> [#if android P #else P #end],
 		'reset'			=> [NONE]
 	];
 	public static var defaultMobileBinds:Map<String, Array<MobileInputID>> = null;
