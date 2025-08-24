@@ -207,6 +207,16 @@ class CoolUtil
 		AndroidTools.showAlertDialog(title, message, {name: "OK", func: null}, null);
 		#else*/
 		FlxG.stage.window.alert(message, title);
-		//#end
+		//#end		
+	}
+
+	#if cpp
+    @:functionCode('
+        return std::thread::hardware_concurrency();
+    ')
+	#end
+    public static function getCPUThreadsCount():Int
+    {
+        return 1;
 	}
 }
