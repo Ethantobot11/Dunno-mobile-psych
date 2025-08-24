@@ -5,6 +5,38 @@ import lime.utils.Assets as LimeAssets;
 
 class CoolUtil
 {
+
+	#if cpp
+@:cppFileCode('#include <thread>')
+#end
+class CoolUtil
+{
+	public static function checkForUpdates(url:String = null):String {
+		if (url == null || url.length == 0)
+			url = "https://raw.githubusercontent.com/Ethantobot11/Dunno-mobile-psych/main/gitVersion.txt";
+		var version:String = states.MainMenuState.psychEngineVersion.trim();
+		if(ClientPrefs.data.checkForUpdates) {
+			trace('checking for updates...');
+			var http = new haxe.Http(url);
+			http.onData = function (data:String)
+			{
+				var newVersion:String = data.split('\n')[0].trim();
+				trace('version online: $newVersion, your version: $version');
+				if(newVersion != version) {
+					trace('versions arent matching! please update');
+					version = newVersion;
+					http.onData = null;
+					http.onError = null;
+					http = null;
+				}
+			}
+			http.onError = function (error) {
+				trace('error: $error');
+			}
+			http.request();
+		}
+		return version;
+	}
 	inline public static function quantize(f:Float, snap:Float){
 		// changed so this actually works lol
 		var m:Float = Math.fround(f * snap);
