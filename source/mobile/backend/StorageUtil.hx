@@ -1,5 +1,9 @@
 package mobile.backend;
 
+import lime.system.System as LimeSystem;
+import haxe.io.Path;
+import haxe.Exception;
+
 /**
  * A storage class for mobile.
  * @author Karim Akra and Homura Akemi (HomuHomu833)
