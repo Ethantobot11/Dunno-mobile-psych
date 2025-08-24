@@ -54,11 +54,11 @@ jobs:
           haxelib run lime config ANDROID_SETUP true
 
       - name: android test
-        run: lime test android -debug
+        run: haxelib run lime test android -debug
 
       - name: ios test
         if: inputs.name == 'iOS'
-        run: lime test ios -debug
+        run: haxelib run lime test ios -debug
 
       - name: Compile
         run: haxelib run lime build ${{ inputs.buildArgs }} 
