@@ -3,10 +3,7 @@ package backend;
 import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
 
-class CoolUtil
-{
-
-	#if cpp
+#if cpp
 @:cppFileCode('#include <thread>')
 #end
 class CoolUtil
