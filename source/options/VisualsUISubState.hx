@@ -226,11 +226,6 @@ class VisualsUISubState extends BaseOptionsMenu
 
 	#if sys
 	function onChangeVSync()
-	{
-		var file:String = StorageUtil.rootDir + "vsync.txt";
-		if(FileSystem.exists(file))
-			FileSystem.deleteFile(file);
-		File.saveContent(file, Std.string(ClientPrefs.data.vsync));
-	}
+		lime.app.Application.current.window.vsync = ClientPrefs.data.vsync;
 	#end
 }
