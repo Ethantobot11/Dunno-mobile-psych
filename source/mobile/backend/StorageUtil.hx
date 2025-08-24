@@ -1,6 +1,5 @@
 package mobile.backend;
 
-import lime.system.System as LimeSystem;
 import haxe.io.Path;
 import haxe.Exception;
 
@@ -63,7 +62,7 @@ class StorageUtil
 		catch (e:Dynamic)
 		{
 			CoolUtil.showPopUp('Please create directory to\n' + StorageUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!'));
-			LimeSystem.exit(1);
+			lime.system.System.exit(1);
 		}
 
 		try
@@ -74,7 +73,7 @@ class StorageUtil
 		catch (e:Dynamic)
 		{
 			CoolUtil.showPopUp('Please create directory to\n' + StorageUtil.getExternalStorageDirectory(true) + '\nPress OK to close the game', 'Error!'));
-			LimeSystem.exit(1);
+			lime.system.System.exit(1);
 		}
 	}
 	#end
