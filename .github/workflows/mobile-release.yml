@@ -6,7 +6,7 @@ permissions:
   discussions: write
 
 env:
-  PROJECT_NAME: PsychEngine 0.7.3
+  PROJECT_NAME: PibbyEngine
   REPO_PATH: Ethantobot11/Dunno-mobile-psych
 
 jobs:
