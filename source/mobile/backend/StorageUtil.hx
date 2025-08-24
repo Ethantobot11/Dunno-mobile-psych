@@ -1,4 +1,4 @@
-package mobile.funkin.backend.utils;
+package mobile.backend;
 
 /**
  * A storage class for mobile.
@@ -13,7 +13,7 @@ class StorageUtil
 	#if android
 	// always force path due to haxe
 	public static function getExternalStorageDirectory():String
-		return '/storage/emulated/0/.CodenameEngine/';
+		return '/storage/emulated/0/.PibbyEngine/';
 
 	public static function requestPermissions():Void
 	{
