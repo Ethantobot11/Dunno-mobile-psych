@@ -118,8 +118,8 @@ class StorageUtil
 	public static function getExternalDirectory(externalDir:String):String
 	{
 		var daPath:String = '';
-		for (path in checkInternalPaths())
-			if (path.contains(internalDir))
+		for (path in checkExternalPaths())
+			if (path.contains(externalDir))
 				daPath = path;
 
 		daPath = Path.addTrailingSlash(daPath.endsWith("\n") ? daPath.substr(0, daPath.length - 1) : daPath);
