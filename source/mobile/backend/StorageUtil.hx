@@ -22,77 +22,56 @@
 
 package mobile.backend;
 
-import lime.system.System as LimeSystem;
-import haxe.io.Path;
-import haxe.Exception;
-
 /**
  * A storage class for mobile.
- * @author Karim Akra and Lily Ross (mcagabe19)
+ * @author Karim Akra and Homura Akemi (HomuHomu833)
  */
 class StorageUtil
 {
 	#if sys
-	// root directory, used for handling the saved storage type and path
-	public static final rootDir:String = LimeSystem.applicationStorageDirectory;
-
-	public static function getStorageDirectory(?force:Bool = false):String
-	{
-		var daPath:String = '';
-		#if android
-		if (!FileSystem.exists(rootDir + 'storagetype.txt'))
-			File.saveContent(rootDir + 'storagetype.txt', ClientPrefs.data.storageType);
-		var curStorageType:String = File.getContent(rootDir + 'storagetype.txt');
-		daPath = force ? StorageType.fromStrForce(curStorageType) : StorageType.fromStr(curStorageType);
-		daPath = Path.addTrailingSlash(daPath);
-		#elseif ios
-		daPath = LimeSystem.documentsDirectory;
-		#else
-		daPath = Sys.getCwd();
-		#end
-
-		return daPath;
-	}
+	public static function getStorageDirectory():String
+		return #if android haxe.io.Path.addTrailingSlash(AndroidContext.getExternalFilesDir()) #elseif ios lime.system.System.documentsDirectory #else Sys.getCwd() #end;
 
 	public static function saveContent(fileName:String, fileData:String, ?alert:Bool = true):Void
 	{
+		final folder:String = #if android StorageUtil.getExternalStorageDirectory() + #else Sys.getCwd() + #end 'saves/';
 		try
 		{
-			if (!FileSystem.exists('saves'))
-				FileSystem.createDirectory('saves');
+			if (!FileSystem.exists(folder))
+				FileSystem.createDirectory(folder);
 
-			File.saveContent('saves/$fileName', fileData);
+			File.saveContent('$folder/$fileName', fileData);
 			if (alert)
-				CoolUtil.showPopUp('$fileName has been saved.', "Success!");
+				CoolUtil.showPopUp(Language.getPhrase('file_save_success', '{1} has been saved.', [fileName]), Language.getPhrase('mobile_success', "Success!"));
 		}
-		catch (e:Exception)
+		catch (e:Dynamic)
 			if (alert)
-				CoolUtil.showPopUp('$fileName couldn\'t be saved.\n(${e.message})', "Error!")
+				CoolUtil.showPopUp(Language.getPhrase('file_save_fail', '{1} couldn\'t be saved.\n({2})', [fileName, e.message]), Language.getPhrase('mobile_error', "Error!"));
 			else
 				trace('$fileName couldn\'t be saved. (${e.message})');
 	}
 
 	#if android
+	// always force path due to haxe
+	public static function getExternalStorageDirectory():String
+		return '/sdcard/.PsychEngine/';
+
 	public static function requestPermissions():Void
 	{
 		if (AndroidVersion.SDK_INT >= AndroidVersionCode.TIRAMISU)
-			AndroidPermissions.requestPermissions(['READ_MEDIA_IMAGES', 'READ_MEDIA_VIDEO', 'READ_MEDIA_AUDIO']);
+			AndroidPermissions.requestPermissions(['READ_MEDIA_IMAGES', 'READ_MEDIA_VIDEO', 'READ_MEDIA_AUDIO', 'READ_MEDIA_VISUAL_USER_SELECTED']);
 		else
 			AndroidPermissions.requestPermissions(['READ_EXTERNAL_STORAGE', 'WRITE_EXTERNAL_STORAGE']);
 
 		if (!AndroidEnvironment.isExternalStorageManager())
-		{
-			if (AndroidVersion.SDK_INT >= AndroidVersionCode.S)
-				AndroidSettings.requestSetting('REQUEST_MANAGE_MEDIA');
 			AndroidSettings.requestSetting('MANAGE_APP_ALL_FILES_ACCESS_PERMISSION');
-		}
 
 		if ((AndroidVersion.SDK_INT >= AndroidVersionCode.TIRAMISU
 			&& !AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_MEDIA_IMAGES'))
 			|| (AndroidVersion.SDK_INT < AndroidVersionCode.TIRAMISU
 				&& !AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_EXTERNAL_STORAGE')))
-			CoolUtil.showPopUp('If you accepted the permissions you are all good!' + '\nIf you didn\'t then expect a crash' + '\nPress OK to see what happens',
-				'Notice!');
+			CoolUtil.showPopUp(Language.getPhrase('permissions_message', 'If you accepted the permissions you are all good!\nIf you didn\'t then expect a crash\nPress OK to see what happens'),
+				Language.getPhrase('mobile_notice', "Notice!"));
 
 		try
 		{
@@ -101,64 +80,21 @@ class StorageUtil
 		}
 		catch (e:Dynamic)
 		{
-			CoolUtil.showPopUp('Please create directory to\n' + StorageUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
-			LimeSystem.exit(1);
+			CoolUtil.showPopUp(Language.getPhrase('create_directory_error', 'Please create directory to\n{1}\nPress OK to close the game', [StorageUtil.getStorageDirectory()]), Language.getPhrase('mobile_error', "Error!"));
+			lime.system.System.exit(1);
 		}
-	}
 
-	public static function checkExternalPaths(?splitStorage = false):Array<String>
-	{
-		var process = new Process('grep -o "/storage/....-...." /proc/mounts | paste -sd \',\'');
-		var paths:String = process.stdout.readAll().toString();
-		if (splitStorage)
-			paths = paths.replace('/storage/', '');
-		return paths.split(',');
-	}
-
-	public static function getExternalDirectory(externalDir:String):String
-	{
-		var daPath:String = '';
-		for (path in checkExternalPaths())
-			if (path.contains(externalDir))
-				daPath = path;
-
-		daPath = Path.addTrailingSlash(daPath.endsWith("\n") ? daPath.substr(0, daPath.length - 1) : daPath);
-		return daPath;
+		try
+		{
+			if (!FileSystem.exists(StorageUtil.getExternalStorageDirectory() + 'mods'))
+				FileSystem.createDirectory(StorageUtil.getExternalStorageDirectory() + 'mods');
+		}
+		catch (e:Dynamic)
+		{
+			CoolUtil.showPopUp(Language.getPhrase('create_directory_error', 'Please create directory to\n{1}\nPress OK to close the game', [StorageUtil.getExternalStorageDirectory()]), Language.getPhrase('mobile_error', "Error!"));
+			lime.system.System.exit(1);
+		}
 	}
 	#end
 	#end
 }
-
-#if android
-@:runtimeValue
-enum abstract StorageType(String) from String to String
-{
-	final forcedPath = '/storage/emulated/0/';
-	final packageNameLocal = 'com.pibbyapocalypse.pibbyengine073';
-	final fileLocal = 'PsychEngine 0.7.3';
-
-	var EXTERNAL = "EXTERNAL";
-
-	public static function fromStr(str:String):StorageType
-	{
-		final EXTERNAL = AndroidEnvironment.getExternalStorageDirectory() + 'Android/Data' + lime.app.Application.current.meta.get('packageName');
-
-		return switch (str)
-		{
-			case "EXTERNAL": EXTERNAL;
-			default: StorageUtil.getExternalDirectory(str) + 'Android/Data' + packageNameLocal;
-		}
-	}
-
-	public static function fromStrForce(str:String):StorageType
-	{
-		final INTERNAL = forcedPath + 'Android/Data' + packageNameLocal;
-
-		return switch (str)
-		{
-			case "EXTERNAL": EXTERNAL;
-			default: StorageUtil.getExternalDirectory(str) + 'Android/Data'+ packageNameLocal;
-		}
-	}
-}
-#end
