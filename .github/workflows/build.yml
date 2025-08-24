@@ -56,11 +56,11 @@ jobs:
 
       - name: android test
         if: inputs.name == 'Android'
-        run: haxelib run lime test android -debug
+        run: haxelib run lime test android -final -D -debug
 
       - name: ios test
         if: inputs.name == 'iOS'
-        run: haxelib run lime test ios -debug
+        run: haxelib run lime test ios -final -nosign -D -debug
 
       - name: Compile
         run: haxelib run lime build ${{ inputs.buildArgs }} 
