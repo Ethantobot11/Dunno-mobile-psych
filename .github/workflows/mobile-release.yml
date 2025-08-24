@@ -43,12 +43,12 @@ jobs:
             os: macos-15
             buildArgs: "android -final -D officialBuild"
             artifactName: androidBuild
-            artifactPath: "export/release/android/bin/app/build/outputs/apk/release/*.apk"
+            artifactPath: "export/release/android/bin/app/build/outputs/apk/release/PibbyEngine.apk"
           - name: iOS
             os: macos-13
             buildArgs: "ios -final -nosign -D officialBuild"
             artifactName: iOSBuild
-            artifactPath: "export/release/ios/build/Release-iphoneos/*.ipa"
+            artifactPath: "export/release/ios/build/Release-iphoneos/PibbyEngine.ipa"
     uses: ./.github/workflows/build.yml
     with:
         name: ${{ matrix.name }}
