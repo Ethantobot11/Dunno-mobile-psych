@@ -56,6 +56,7 @@ import backend.Conductor;
 import backend.BaseStage;
 import backend.Difficulty;
 import backend.Mods;
+import backend.Language;
 import mobile.backend.StorageUtil;
 
 import objects.Alphabet;
