@@ -1,4 +1,4 @@
-package mobile.funkin.backend.system;
+package mobile.backend;
 
 #if mobile
 import lime.utils.Assets as LimeAssets;
