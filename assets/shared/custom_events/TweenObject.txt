@@ -1,0 +1,6 @@
+v1:type
+v2: object,speed,value,ease
+
+A = alpha, X, Y, Ang = Angle, C = Color
+
+back,elastic,bounce,linear,quad,sine,expo
