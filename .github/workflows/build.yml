@@ -21,7 +21,7 @@ on:
 
 env:
   HAXE_VERSION: 4.3.7
-  PROJECT_NAME: PsychEngine 0.7.3
+  PROJECT_NAME: PibbyEngine
 
 jobs:
   build:
