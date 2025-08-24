@@ -7,9 +7,21 @@ package mobile.backend;
 class StorageUtil
 {
 	#if sys
-	public static function getStorageDirectory():String
-		return #if android haxe.io.Path.addTrailingSlash(AndroidContext.getExternalFilesDir()) #elseif ios lime.system.System.documentsDirectory #else Sys.getCwd() #end;
-
+		public static function getStorageDirectory(?force:Bool = false):String
+	{
+		var daPath:String = '';
+		#if android
+		if (!FileSystem.exists(rootDir + 'storagetype.txt'))
+			File.saveContent(rootDir + 'storagetype.txt');
+		var curStorageType:String = File.getContent(rootDir + 'storagetype.txt');
+		daPath = force ? StorageType.fromStrForce(curStorageType) : StorageType.fromStr(curStorageType);
+		daPath = Path.addTrailingSlash(daPath);
+		#elseif ios
+		daPath = LimeSystem.documentsDirectory;
+		#else
+		daPath = Sys.getCwd();
+		#end
+			
 	public static function saveContent(fileName:String, fileData:String, ?alert:Bool = true):Void
 	{
 		try
@@ -91,10 +103,10 @@ class StorageUtil
 		var daPath:String = '';
 		for (path in checkExternalPaths())
 			if (path.contains(externalDir))
-				path;
+				daPath = path;
 
-		Path = Path.addTrailingSlash(Path.endsWith("\n") ? Path.substr(0, Path.length - 1) : Path);
-		return Path;
+		daPath = Path.addTrailingSlash(Path.endsWith("\n") ? daPath.substr(0, daPath.length - 1) : Path);
+		return daPath;
 	}
 	#end
 	#end
