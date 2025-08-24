@@ -78,9 +78,9 @@ class StorageUtil
 		if (AndroidVersion.SDK_INT >= AndroidVersionCode.TIRAMISU)
 			AndroidPermissions.requestPermissions(['READ_MEDIA_IMAGES', 'READ_MEDIA_VIDEO', 'READ_MEDIA_AUDIO']);
 		else
-			AndroidPermissions.requestPermissions(['READ_INTERNAL_STORAGE', 'WRITE_INTERNAL_STORAGE']);
+			AndroidPermissions.requestPermissions(['READ_EXTERNAL_STORAGE', 'WRITE_EXTERNAL_STORAGE']);
 
-		if (!AndroidEnvironment.isInternalStorageManager())
+		if (!AndroidEnvironment.isExternalStorageManager())
 		{
 			if (AndroidVersion.SDK_INT >= AndroidVersionCode.S)
 				AndroidSettings.requestSetting('REQUEST_MANAGE_MEDIA');
@@ -90,7 +90,7 @@ class StorageUtil
 		if ((AndroidVersion.SDK_INT >= AndroidVersionCode.TIRAMISU
 			&& !AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_MEDIA_IMAGES'))
 			|| (AndroidVersion.SDK_INT < AndroidVersionCode.TIRAMISU
-				&& !AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_INTERNAL_STORAGE')))
+				&& !AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_EXTERNAL_STORAGE')))
 			CoolUtil.showPopUp('If you accepted the permissions you are all good!' + '\nIf you didn\'t then expect a crash' + '\nPress OK to see what happens',
 				'Notice!');
 
@@ -106,7 +106,7 @@ class StorageUtil
 		}
 	}
 
-	public static function checkInternalPaths(?splitStorage = false):Array<String>
+	public static function checkExternalPaths(?splitStorage = false):Array<String>
 	{
 		var process = new Process('grep -o "/storage/....-...." /proc/mounts | paste -sd \',\'');
 		var paths:String = process.stdout.readAll().toString();
@@ -115,7 +115,7 @@ class StorageUtil
 		return paths.split(',');
 	}
 
-	public static function getInternalDirectory(internalDir:String):String
+	public static function getExternalDirectory(externalDir:String):String
 	{
 		var daPath:String = '';
 		for (path in checkInternalPaths())
@@ -137,16 +137,16 @@ enum abstract StorageType(String) from String to String
 	final packageNameLocal = 'com.pibbyapocalypse.pibbyengine073';
 	final fileLocal = 'PsychEngine 0.7.3';
 
-	var INTERNAL = "INTERNAL";
+	var EXTERNAL = "EXTERNAL";
 
 	public static function fromStr(str:String):StorageType
 	{
-		final INTERNAL = AndroidEnvironment.getInternalStorageDirectory() + 'Android/Data' + lime.app.Application.current.meta.get('packageName');
+		final EXTERNAL = AndroidEnvironment.getExternalStorageDirectory() + 'Android/Data' + lime.app.Application.current.meta.get('packageName');
 
 		return switch (str)
 		{
-			case "INTERNAL": INTERNAL;
-			default: StorageUtil.getInternalDirectory(str) + 'Android/Data' + packageNameLocal;
+			case "EXTERNAL": EXTERNAL;
+			default: StorageUtil.getExternalDirectory(str) + 'Android/Data' + packageNameLocal;
 		}
 	}
 
@@ -156,8 +156,8 @@ enum abstract StorageType(String) from String to String
 
 		return switch (str)
 		{
-			case "INTERNAL": INTERNAL;
-			default: StorageUtil.getInternalDirectory(str) + 'Android/Data'+ packageNameLocal;
+			case "EXTERNAL": EXTERNAL;
+			default: StorageUtil.getExternalDirectory(str) + 'Android/Data'+ packageNameLocal;
 		}
 	}
 }
