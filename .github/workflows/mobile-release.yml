@@ -6,8 +6,8 @@ permissions:
   discussions: write
 
 env:
-  PROJECT_NAME: PsychEngine 0.7.3
-  REPO_PATH: Ethantobot11/Dunno-mobile-psych
+  PROJECT_NAME: PibbyEngine
+  REPO_PATH: Ethantobot11/PibbyEngine
 
 jobs:
   get-commit-hash:
@@ -42,10 +42,12 @@ jobs:
           - name: Android
             os: macos-15
             buildArgs: "android -final -D officialBuild"
+            setupCommand: sh ./setup/unix.sh
             artifactName: androidBuild
             artifactPath: "export/release/android/bin/app/build/outputs/apk/release/*.apk"
           - name: iOS
-            os: macos-15
+            os: macos-13
+            setupCommand: sh ./setup/unix.sh
             buildArgs: "ios -final -nosign -D officialBuild"
             artifactName: iOSBuild
             artifactPath: "export/release/ios/build/Release-iphoneos/*.ipa"
@@ -53,6 +55,7 @@ jobs:
     with:
         name: ${{ matrix.name }}
         os: ${{ matrix.os }}
+        setupCommand: ${{ matrix.setupCommand }}
         buildArgs: ${{ matrix.buildArgs }}
         artifactName: ${{ matrix.artifactName }}
         artifactPath: ${{ matrix.artifactPath }}
@@ -77,15 +80,15 @@ jobs:
            name: iOSBuild
            path: ${{ github.workspace }}
 
-      - name: Zip iOS Build For Release
-        run: zip -r /home/runner/${{ env.PROJECT_NAME }}-iOS.zip ${{ github.workspace }}/${{ env.PROJECT_NAME }}.ipa
+      - name: Move iOS File
+        run: mv ${{ github.workspace }}/${{ env.PROJECT_NAME }}.ipa /home/runner/${{ env.PROJECT_NAME }}.ipa
 
       - name: Publish The Release
-        uses: softprops/action-gh-release@master
+        uses: softprops/action-gh-release@v2
         with:
-          name: "DevBuild ${{ needs.get-commit-hash.outputs.commit_hash }}"
-          tag_name: "devbuild-${{ needs.get-commit-hash.outputs.commit_hash }}"
-          lastrelease: false
+          name: "HOTIFX 0.71 (V${{ needs.get-gitversion-hash }})"
+          tag_name: "release-${{ needs.get-commit-hash.outputs.commit_hash }}"
+          make_latest: true
           files: |
             /home/runner/*.apk
-            /home/runner/*.zip
+            /home/runner/*.ipa
