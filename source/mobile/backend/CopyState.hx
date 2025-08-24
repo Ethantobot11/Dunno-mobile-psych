@@ -1,4 +1,4 @@
-package mobile.backend;
+package mobile.backend.copystate;
 
 #if mobile
 import lime.utils.Assets as LimeAssets;
