@@ -20,7 +20,7 @@ on:
         type: string
 
 env:
-  HAXE_VERSION: 4.3.7
+  HAXE_VERSION: 4.3.5
   PROJECT_NAME: PsychEngine 0.7.3
 
 jobs:
@@ -59,9 +59,12 @@ jobs:
       - name: Make IPA
         if: inputs.name == 'iOS'
         run: |
-          cd export/release/ios/build/Release-iphoneos
+          brew install ldid
+          cd export/release/ios/build/Release-iphoneos/${{ env.PROJECT_NAME }}.app
+          ldid -S../../../${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.entitlements ${{ env.PROJECT_NAME }}
+          cd ..
           mkdir Payload
-          mv *.app Payload
+          mv ${{ env.PROJECT_NAME }}.app Payload
           zip -r ${{ env.PROJECT_NAME }}.ipa Payload
 
       - name: Upload Artifact
@@ -69,4 +72,3 @@ jobs:
         with:
           name: ${{ inputs.artifactName }}
           path: ${{ inputs.artifactPath }}
-          if-no-files-found: error
