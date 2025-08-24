@@ -44,6 +44,7 @@ jobs:
         run: |
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
+          haxelib install hxcpp-debug-server --quiet
 
       - name: Configure Android
         if: inputs.name == 'Android'
