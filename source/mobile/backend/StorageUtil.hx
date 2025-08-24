@@ -65,14 +65,15 @@ class StorageUtil
 			CoolUtil.showPopUp('Please create directory to\n' + StorageUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
 			LimeSystem.exit(1);
 		}
+
 		try
 		{
 			if (!FileSystem.exists(StorageUtil.getExternalStorageDirectory() + 'mods'))
 				FileSystem.createDirectory(StorageUtil.getExternalStorageDirectory() + 'mods');
 		}
-				catch (e:Dynamic)
+		catch (e:Dynamic)
 		{
-			CoolUtil.showPopUp('Please create directory to\n' + StorageUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
+			CoolUtil.showPopUp('Please create directory to\n' + StorageUtil.getExternalStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
 			LimeSystem.exit(1);
 		}
 	}
