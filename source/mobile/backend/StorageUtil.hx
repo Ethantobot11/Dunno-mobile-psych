@@ -1,4 +1,12 @@
-#if sys
+package mobile.backend;
+
+/**
+ * A storage class for mobile.
+ * @author Karim Akra and Homura Akemi (HomuHomu833)
+ */
+class StorageUtil
+{
+    #if sys
 	public static function getStorageDirectory():String
 		return #if android haxe.io.Path.addTrailingSlash(AndroidContext.getExternalFilesDir()) #elseif ios lime.system.System.documentsDirectory #else Sys.getCwd() #end;
 			
