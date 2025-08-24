@@ -1,26 +1,6 @@
-package mobile.backend;
-
-/**
- * A storage class for mobile.
- * @author Karim Akra and Homura Akemi (HomuHomu833)
- */
-class StorageUtil
-{
-	#if sys
-		public static function getStorageDirectory(?force:Bool = false):String
-	{
-		var daPath:String = '';
-		#if android
-		if (!FileSystem.exists(rootDir + 'storagetype.txt'))
-			File.saveContent(rootDir + 'storagetype.txt');
-		var curStorageType:String = File.getContent(rootDir + 'storagetype.txt');
-		daPath = force ? StorageType.fromStrForce(curStorageType) : StorageType.fromStr(curStorageType);
-		daPath = Path.addTrailingSlash(daPath);
-		#elseif ios
-		daPath = LimeSystem.documentsDirectory;
-		#else
-		daPath = Sys.getCwd();
-		#end
+#if sys
+	public static function getStorageDirectory():String
+		return #if android haxe.io.Path.addTrailingSlash(AndroidContext.getExternalFilesDir()) #elseif ios lime.system.System.documentsDirectory #else Sys.getCwd() #end;
 			
 	public static function saveContent(fileName:String, fileData:String, ?alert:Bool = true):Void
 	{
@@ -87,26 +67,16 @@ class StorageUtil
 			CoolUtil.showPopUp('Please create directory to\n' + StorageUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
 			LimeSystem.exit(1);
 		}
-	}
-
-	public static function checkExternalPaths(?splitStorage = false):Array<String>
-	{
-		var process = new Process('grep -o "/storage/....-...." /proc/mounts | paste -sd \',\'');
-		var paths:String = process.stdout.readAll().toString();
-		if (splitStorage)
-			paths = paths.replace('/storage/', '');
-		return paths.split(',');
-	}
-
-	public static function getExternalDirectory(externalDir:String):String
-	{
-		var daPath:String = '';
-		for (path in checkExternalPaths())
-			if (path.contains(externalDir))
-				daPath = path;
-
-		daPath = Path.addTrailingSlash(Path.endsWith("\n") ? daPath.substr(0, daPath.length - 1) : Path);
-		return daPath;
+		try
+		{
+			if (!FileSystem.exists(StorageUtil.getExternalStorageDirectory() + 'mods'))
+				FileSystem.createDirectory(StorageUtil.getExternalStorageDirectory() + 'mods');
+		}
+				catch (e:Dynamic)
+		{
+			CoolUtil.showPopUp('Please create directory to\n' + StorageUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
+			LimeSystem.exit(1);
+		}
 	}
 	#end
 	#end
