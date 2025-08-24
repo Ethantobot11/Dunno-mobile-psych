@@ -60,12 +60,12 @@ jobs:
         if: inputs.name == 'iOS'
         run: |
           brew install ldid
-          cd export/release/ios/build/Release-iphoneos/${{ env.PROJECT_NAME }}.app
-          ldid -S../../../${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.entitlements ${{ env.PROJECT_NAME }}
+          cd export/release/ios/build/Release-iphoneos/PibbyEngine.app
+          ldid -S../../../PibbyEngine/PibbyEngine.entitlements PibbyEngine
           cd ..
           mkdir Payload
-          mv ${{ env.PROJECT_NAME }}.app Payload
-          zip -r ${{ env.PROJECT_NAME }}.ipa Payload
+          mv PibbyEngine.app Payload
+          zip -r PibbyEngine.ipa Payload
 
       - name: Upload Artifact
         uses: actions/upload-artifact@main
