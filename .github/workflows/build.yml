@@ -36,6 +36,31 @@ jobs:
         with:
           haxe-version: ${{ env.HAXE_VERSION }}
 
+      - name: Restore existing build cache for faster compilation
+        if: inputs.name == 'iOS'
+        uses: actions/cache@v4
+        with:
+          # not caching the bin folder to prevent asset duplication and stuff like that
+          key: cache-build-ios
+          path: |
+            .haxelib/
+            export/release/ios/PibbyEngine/haxe/
+          restore-keys: |
+            cache-build-ios
+
+      - name: Restore existing build cache for faster compilation
+        if: inputs.name == 'Android'
+        uses: actions/cache@v4
+        with:
+          # not caching the bin folder to prevent asset duplication and stuff like that
+          key: cache-build-android
+          path: |
+            .haxelib/
+            export/release/android/haxe/
+            export/release/android/obj/
+          restore-keys: |
+            cache-build-android
+
       - name: Install libVLC
         if: inputs.name == 'Linux'
         run: sudo apt install libvlc-dev libvlccore-dev
@@ -45,6 +70,39 @@ jobs:
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
           haxelib install hxcpp-debug-server --quiet
+
+      - name: Clearing already existing cache
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const caches = await github.rest.actions.getActionsCacheList({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
+            for (const cache of caches.data.actions_caches) {
+              if (cache.key == "cache-build-ios") {
+                console.log('Clearing ' + cache.key + '...')
+                await github.rest.actions.deleteActionsCacheById({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  cache_id: cache.id,
+                })
+                console.log("Cache cleared.")
+              }
+            }
+
+      - name: Uploading new cache
+        if: inputs.name == 'Android'
+        uses: actions/cache@v4
+        with:
+          # caching again since for some reason it doesnt work with the first post cache shit
+          key: cache-build-android
+          path: |
+            .haxelib/
+            export/release/android/haxe/
+            export/release/android/obj/
+          restore-keys: |
+            cache-build-android
 
       - name: Configure Android
         if: inputs.name == 'Android'
@@ -73,3 +131,15 @@ jobs:
         with:
           name: ${{ inputs.artifactName }}
           path: ${{ inputs.artifactPath }}
+
+      - name: Uploading new cache
+        if: inputs.name == 'iOS'
+        uses: actions/cache@v4
+        with:
+          # caching again since for some reason it doesnt work with the first post cache shit
+          key: cache-build-ios
+          path: |
+            .haxelib/
+            export/release/ios/PibbyEngine/haxe/
+          restore-keys: |
+            cache-build-ios
