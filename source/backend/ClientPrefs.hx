@@ -149,7 +149,7 @@ class ClientPrefs {
 
 		'accept'		=> [A],
 		'back'			=> [B],
-		'pause'			=> [#if android P #else P #end],
+		'pause'			=> [#if android NONE #else P #end],
 		'reset'			=> [NONE]
 	];
 	public static var defaultMobileBinds:Map<String, Array<MobileInputID>> = null;
