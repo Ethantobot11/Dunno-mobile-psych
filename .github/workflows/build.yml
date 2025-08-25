@@ -57,6 +57,13 @@ jobs:
       - name: Compile
         run: haxelib run lime build ${{ inputs.buildArgs }} 
 
+      - name: Upload Gradle Problems Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-problems-report
+          path: export/debug/android/bin/build/reports/problems/problems-report.html
+    
+
       - name: Make IPA
         if: inputs.name == 'iOS'
         run: |
