@@ -55,15 +55,7 @@ jobs:
           haxelib run lime config ANDROID_SETUP true
 
       - name: Compile
-        run: haxelib run lime build ${{ inputs.buildArgs }} 
-
-      - name: Upload Gradle Problems Report
-        if: inputs.name == 'Android'
-        uses: actions/upload-artifact@v4
-        with:
-          name: gradle-problems-report
-          path: export/debug/android/bin/build/reports/problems/problems-report.html
-    
+        run: haxelib run lime build ${{ inputs.buildArgs }}     
 
       - name: Make IPA
         if: inputs.name == 'iOS'
