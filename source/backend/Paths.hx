@@ -434,10 +434,9 @@ class Paths
 	}
 
 	public static var currentTrackedSounds:Map<String, Sound> = [];
-	public static function returnSound(key:String, ?path:String, ?modsAllowed:Bool = true, ?beepOnNull:Bool = true);
+	public static function returnSound(key:String, ?path:String, ?modsAllowed:Bool = true, ?beepOnNull:Bool = true)
 	{
 		var file:String = getPath(key) + '.$SOUND_EXT', SOUND, path, modsAllowed);
-
 		//trace('precaching sound: $file');
 		if(!currentTrackedSounds.exists(file))
 		{
