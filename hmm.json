@@ -3,7 +3,7 @@
     {
       "name": "lime",
       "type": "haxelib",
-      "version": "8.1.3"
+      "version": "8.2.1"
     },
     {
       "name": "openfl",
@@ -58,8 +58,10 @@
     },
     {
       "name": "hxdiscord_rpc",
-      "type": "haxelib",
-      "version": "1.2.4"
+      "type": "git",
+      "dir": null,
+      "ref": "main",
+      "url": "https://github.com/MAJigsaw77/hxdiscord_rpc"
     },
     {
       "name": "linc_luajit",
@@ -80,7 +82,7 @@
       "type": "git",
       "dir": null,
       "ref": "main",
-      "url": "https://github.com/MAJigsaw77/extension-androidtools""
+      "url": "https://github.com/MAJigsaw77/extension-androidtools"
     }
   ]
 }
