@@ -390,9 +390,9 @@ class Paths
 		var xml:String = modsXml(key);
 		if(FileSystem.exists(xml)) xmlExists = true;
 
-		return FlxAtlasFrames.fromSparrow(imageLoaded, (xmlExists ? File.getContent(xml) : getPath(Language.getFileTranslation('images/$key') + '.xml', TEXT, parentFolder)));
+		return FlxAtlasFrames.fromSparrow(imageLoaded, (xmlExists ? File.getContent(xml) : getPath('images/$key') + '.xml', TEXT, parentFolder);
 		#else
-		return FlxAtlasFrames.fromSparrow(imageLoaded, getPath('images/$key') + '.xml', TEXT, parentFolder));
+		return FlxAtlasFrames.fromSparrow(imageLoaded, getPath('images/$key') + '.xml', TEXT, parentFolder);
 		#end
 	}
 
@@ -405,9 +405,9 @@ class Paths
 		var txt:String = modsTxt(key);
 		if(FileSystem.exists(txt)) txtExists = true;
 
-		return FlxAtlasFrames.fromSpriteSheetPacker(imageLoaded, (txtExists ? File.getContent(txt) : getPath(Language.getFileTranslation('images/$key') + '.txt', TEXT, parentFolder)));
+		return FlxAtlasFrames.fromSpriteSheetPacker(imageLoaded, (txtExists ? File.getContent(txt) : getPath('images/$key') + '.txt', TEXT, parentFolder);
 		#else
-		return FlxAtlasFrames.fromSpriteSheetPacker(imageLoaded, getPath('images/$key') + '.txt', TEXT, parentFolder));
+		return FlxAtlasFrames.fromSpriteSheetPacker(imageLoaded, getPath('images/$key') + '.txt', TEXT, parentFolder);
 		#end
 	}
 
@@ -420,9 +420,9 @@ class Paths
 		var json:String = modsImagesJson(key);
 		if(FileSystem.exists(json)) jsonExists = true;
 
-		return FlxAtlasFrames.fromTexturePackerJson(imageLoaded, (jsonExists ? File.getContent(json) : getPath(Language.getFileTranslation('images/$key') + '.json', TEXT, parentFolder)));
+		return FlxAtlasFrames.fromTexturePackerJson(imageLoaded, (jsonExists ? File.getContent(json) : getPath('images/$key') + '.json', TEXT, parentFolder);
 		#else
-		return FlxAtlasFrames.fromTexturePackerJson(imageLoaded, getPath('images/$key') + '.json', TEXT, parentFolder));
+		return FlxAtlasFrames.fromTexturePackerJson(imageLoaded, getPath('images/$key') + '.json', TEXT, parentFolder);
 		#end
 	}
 
