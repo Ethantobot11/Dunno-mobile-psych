@@ -91,8 +91,8 @@
 	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
 	<haxelib name="flxanimate"/>
 
-	<!--android needed-->
-	<haxelib name="extension-androidtools"/>
+	<!-- Mobile Specific-->
+	<haxelib name="extension-androidtools" if="android" />
 
 	<!-- Disable Discord IO Thread -->
 	<haxedef name="DISCORD_DISABLE_IO_THREAD" if="hxdiscord_rpc" />
