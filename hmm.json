@@ -2,18 +2,22 @@
   "dependencies": [
     {
       "name": "lime",
-      "type": "haxelib",
-      "version": "8.2.1"
+      "type": "git",
+      "dir": null,
+      "ref": "main",
+      "url": "https://github.com/kittycathy233/lime"
     },
     {
       "name": "openfl",
       "type": "haxelib",
-      "version": "9.3.3"
+      "version": "9.4.1"
     },
     {
       "name": "flixel",
-      "type": "haxelib",
-      "version": "5.6.1"
+      "type": "git",
+      "dir": null,
+      "ref": "main",
+      "url": "https://github.com/kittycathy233/flixel"
     },
     {
       "name": "flixel-addons",
@@ -35,7 +39,7 @@
       "type": "git",
       "dir": null,
       "ref": "main",
-      "url": "https://github.com/HomuHomu833/hxcpp"
+      "url": "https://github.com/kittycathy233/hxcpp"
     },
     {
       "name": "hxCodec",
@@ -67,8 +71,8 @@
       "name": "linc_luajit",
       "type": "git",
       "dir": null,
-      "ref": "master",
-      "url": "https://github.com/superpowers04/linc_luajit"
+      "ref": "main",
+      "url": "https://github.com/kittycathy233/linc_luajit"
     },
     {
       "name": "flxanimate",
