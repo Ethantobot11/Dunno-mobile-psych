@@ -8,7 +8,7 @@
     {
       "name": "openfl",
       "type": "haxelib",
-      "version": "9.3.3",
+      "version": "9.3.3"
     },
     {
       "name": "flixel",
@@ -74,6 +74,13 @@
       "dir": null,
       "ref": "dev",
       "url": "https://github.com/ShadowMario/flxanimate.git"
+    },
+    {
+      "name": "extension-androidtools",
+      "type": "git",
+      "dir": null,
+      "ref": "main",
+      "url": "https://github.com/LimeExtensions/extension-androidtools"
     }
   ]
 }
