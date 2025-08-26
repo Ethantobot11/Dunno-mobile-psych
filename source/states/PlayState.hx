@@ -827,24 +827,8 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-		{
-			if(SScript.global.exists(scriptFile))
-				doPush = false;
-
-			if(doPush) initHScript(scriptFile);
-		}
-		#end
-	}
-
-	public function getLuaObject(tag:String, text:Bool=true):FlxSprite {
-	public function getLuaObject(tag:String, text:Bool=true):FlxSprite {
-		#if LUA_ALLOWED
-		if(modchartSprites.exists(tag)) return modchartSprites.get(tag);
-		if(text && modchartTexts.exists(tag)) return modchartTexts.get(tag);
-		if(variables.exists(tag)) return variables.get(tag);
-		#end
-		return null;
-	}
+	public function getLuaObject(tag:String):Dynamic
+		return variables.get(tag);
 
 	function startCharacterPos(char:Character, ?gfCheck:Bool = false) {
 		if(gfCheck && char.curCharacter.startsWith('gf')) { //IF DAD IS GIRLFRIEND, HE GOES TO HER POSITION
@@ -854,6 +838,15 @@ class PlayState extends MusicBeatState
 		}
 		char.x += char.positionArray[0];
 		char.y += char.positionArray[1];
+	}
+
+		{
+			if(SScript.global.exists(scriptFile))
+				doPush = false;
+
+			if(doPush) initHScript(scriptFile);
+		}
+		#end
 	}
 
 	public var videoCutscene:VideoSprite = null;
