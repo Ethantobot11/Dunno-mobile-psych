@@ -37,11 +37,7 @@ import flixel.addons.display.FlxRuntimeShader;
 import openfl.filters.ShaderFilter;
 #end
 
-#if VIDEOS_ALLOWED
-import hxvlc.flixel.FlxVideo as VideoHandler;
-#end
-
-import objects.VideoSprite
+import objects.VideoSprite;
 import objects.Note.EventNote;
 import objects.*;
 import states.stages.objects.*;
