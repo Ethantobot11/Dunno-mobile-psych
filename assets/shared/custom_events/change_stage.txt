@@ -1,3 +1,0 @@
-Do on Lua Stage
-
-Value 1: Put the stage name that you wanna make appear

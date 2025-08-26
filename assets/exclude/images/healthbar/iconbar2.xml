@@ -1,4 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<TextureAtlas imagePath="iconbar.png">
-<SubTexture name="Icons Bar0000" x="0" y="0" width="446" height="56" frameX="0" frameY="-11" frameWidth="446" frameHeight="73" />
-</TextureAtlas>

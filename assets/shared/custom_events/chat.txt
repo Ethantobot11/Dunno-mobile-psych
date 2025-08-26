@@ -1,3 +1,0 @@
-Value 1 Color From Hex
-
-Value 2 Text to chat
