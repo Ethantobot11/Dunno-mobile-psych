@@ -799,6 +799,7 @@ class PlayState extends MusicBeatState
 		#end
 
 		// HScript
+		// HScript
 		#if HSCRIPT_ALLOWED
 		var doPush:Bool = false;
 		var scriptFile:String = 'characters/' + name + '.hx';
@@ -827,8 +828,14 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-	public function getLuaObject(tag:String):Dynamic
-		return variables.get(tag);
+	public function getLuaObject(tag:String, text:Bool=true):FlxSprite {
+		#if LUA_ALLOWED
+		if(modchartSprites.exists(tag)) return modchartSprites.get(tag);
+		if(text && modchartTexts.exists(tag)) return modchartTexts.get(tag);
+		if(variables.exists(tag)) return variables.get(tag);
+		#end
+		return null;
+	}
 
 	function startCharacterPos(char:Character, ?gfCheck:Bool = false) {
 		if(gfCheck && char.curCharacter.startsWith('gf')) { //IF DAD IS GIRLFRIEND, HE GOES TO HER POSITION
@@ -887,9 +894,14 @@ class PlayState extends MusicBeatState
 				videoCutscene.play();
 			return videoCutscene;
 		}
-    #end
-	return null; // ✅ always return something
-} // 👈 this was missing!
+	
+		function startAndEnd()
+	    {
+		   if(endingSong)
+			   endSong();
+		   else
+			   startCountdown();
+	    }
 
 	var dialogueCount:Int = 0;
 	public var psychDialogue:DialogueBoxPsych;
