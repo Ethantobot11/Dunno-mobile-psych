@@ -840,15 +840,6 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-		{
-			if(SScript.global.exists(scriptFile))
-				doPush = false;
-
-			if(doPush) initHScript(scriptFile);
-		}
-		#end
-	}
-
 	public var videoCutscene:VideoSprite = null;
 	public function startVideo(name:String, forMidSong:Bool = false, canSkip:Bool = true, loop:Bool = false, playOnLoad:Bool = true)
 	{
