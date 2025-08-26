@@ -19,6 +19,8 @@ on:
         required: true
         type: string
 
+permissions: write-all
+
 env:
   HAXE_VERSION: 4.3.7
   PROJECT_NAME: PibbyEngine
@@ -26,7 +28,6 @@ env:
 jobs:
   build:
     name: Build
-    permissions: write-all
     runs-on: ${{ inputs.os }}
     steps:
       - name: Checkout
