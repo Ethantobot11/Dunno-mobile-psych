@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				44,
+				-47
+			],
+			"loop": true,
+			"fps": 20,
+			"anim": "idle",
+			"indices": [],
+			"name": "idle instance"
+		},
+		{
+			"offsets": [
+				161,
+				9
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "left instance"
+		},
+		{
+			"offsets": [
+				-127,
+				-91
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right instance"
+		},
+		{
+			"offsets": [
+				-42,
+				-53
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "down instance"
+		},
+		{
+			"offsets": [
+				41,
+				-7
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "up instance"
+		},
+		{
+			"offsets": [
+				0,
+				-10
+			],
+			"loop": false,
+			"fps": 20,
+			"anim": "hit",
+			"indices": [],
+			"name": "hit"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/Corr_rigby",
+	"position": [
+		-40,
+		-170
+	],
+	"healthicon": "Corr-rigby",
+	"flip_x": false,
+	"healthbar_colors": [
+		167,
+		132,
+		96
+	],
+	"camera_position": [
+		-100,
+		20
+	],
+	"sing_duration": 4,
+	"scale": 1.5
+}
