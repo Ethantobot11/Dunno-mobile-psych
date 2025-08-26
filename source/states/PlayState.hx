@@ -888,6 +888,7 @@ class PlayState extends MusicBeatState
 			return videoCutscene;
 		}
     #end
+	return null; // ✅ always return something
 } // 👈 this was missing!
 
 	var dialogueCount:Int = 0;
