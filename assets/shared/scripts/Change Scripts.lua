@@ -10,7 +10,8 @@ addLuaScript('scripts extras/Shaders/Glitchy icon')
 end
 end
 
-if songName == "child's-play-awe-hard" or songName == 'my-final-hard' then  
+if songName == "childs-play-awe" or songName == 'my-final' then  
+addLuaScript('scripts extras/HealthBar Gumball') 
 addLuaScript('scripts extras/Apocalypse Count Gumball')
 
 if getPropertyFromClass('ClientPrefs', 'shaders') == true then
@@ -53,7 +54,7 @@ addLuaScript('scripts extras/Shaders/Glitchy icon')
 end
 end
 
-if songName == 'come-along-with-me-alt-hard' or songName == 'ssv3-improved-hard' or songName == 'come-along-with-mev-hard' then 
+if songName == 'come-along-with-me-alt' or songName == 'SSv3-improved' or songName == 'come-along-with-meV' then 
 addLuaScript('scripts extras/HealthBar Finn') 
 addLuaScript('scripts extras/Apocalypse Count Finn')
 
@@ -85,6 +86,17 @@ end
 end
 
 if songName == "No Hero Remix" then 
+addLuaScript('scripts extras/HealthBar Gumball') 
+addLuaScript('scripts extras/Apocalypse Count Gumball')
+
+if getPropertyFromClass('ClientPrefs', 'shaders') == true then
+addLuaScript('scripts extras/Shaders/Apocalypse shader')
+addLuaScript('scripts extras/Shaders/glitchy notes by ansfoxy')
+addLuaScript('scripts extras/Shaders/Glitchy icon') 
+end
+end
+
+if songName == 'help-Wahoo' or songName == 'Scrapped' or songName == 'Cosmic Conflict' then 
 addLuaScript('scripts extras/HealthBar Gumball') 
 addLuaScript('scripts extras/Apocalypse Count Gumball')
 
