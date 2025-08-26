@@ -1,0 +1,5 @@
+v1 = any number will activate if the trail is unactive
+
+v1 = any number will deactivate if the trail is active
+
+v2 = bf or dad or both of them (bf,dad,bfdad)
