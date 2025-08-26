@@ -38,7 +38,7 @@ import openfl.filters.ShaderFilter;
 #end
 
 #if VIDEOS_ALLOWED
-import hxcodec.flixel.FlxVideo as VideoHandler;
+import hxvlc.flixel.FlxVideo as VideoHandler;
 #end
 
 import objects.Note.EventNote;
