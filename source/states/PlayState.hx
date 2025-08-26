@@ -41,7 +41,7 @@ import openfl.filters.ShaderFilter;
 import hxvlc.flixel.FlxVideo as VideoHandler;
 #end
 
-import objects.VideoSprite;
+import objects.VideoSprite
 import objects.Note.EventNote;
 import objects.*;
 import states.stages.objects.*;
@@ -850,56 +850,80 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-	public function startVideo(name:String)
-	{
-		#if VIDEOS_ALLOWED
-		inCutscene = true;
-
-		var filepath:String = Paths.video(name);
-		#if sys
-		if(!FileSystem.exists(filepath))
-		#else
-		if(!OpenFlAssets.exists(filepath))
-		#end
-		{
 			FlxG.log.warn('Couldnt find video file: ' + name);
 			startAndEnd();
 			return;
 		}
 
-		var video:VideoHandler = new VideoHandler();
-			#if (hxCodec >= "3.0.0")
-			// Recent versions
-			video.play(filepath);
-			video.onEndReached.add(function()
-			{
-				video.dispose();
-				startAndEnd();
-				return;
-			}, true);
-			#else
-			// Older versions
-			video.playVideo(filepath);
-			video.finishCallback = function()
-			{
-				startAndEnd();
-				return;
-			}
-			#end
-		#else
-		FlxG.log.warn('Platform not supported!');
-		startAndEnd();
-		return;
+				{
+			if(Iris.instances.exists(scriptFile))
+				doPush = false;
+
+			if(doPush) initHScript(scriptFile);
+		}
 		#end
 	}
 
-	function startAndEnd()
-	{
-		if(endingSong)
-			endSong();
-		else
-			startCountdown();
+	public function getLuaObject(tag:String):Dynamic
+		return variables.get(tag);
+
+	function startCharacterPos(char:Character, ?gfCheck:Bool = false) {
+		if(gfCheck && char.curCharacter.startsWith('gf')) { //IF DAD IS GIRLFRIEND, HE GOES TO HER POSITION
+			char.setPosition(GF_X, GF_Y);
+			char.scrollFactor.set(0.95, 0.95);
+			char.danceEveryNumBeats = 2;
+		}
+		char.x += char.positionArray[0];
+		char.y += char.positionArray[1];
 	}
+
+	public var videoCutscene:VideoSprite = null;
+	public function startVideo(name:String, forMidSong:Bool = false, canSkip:Bool = true, loop:Bool = false, playOnLoad:Bool = true)
+	{
+		#if VIDEOS_ALLOWED
+		inCutscene = !forMidSong;
+		canPause = forMidSong;
+
+		var foundFile:Bool = false;
+		var fileName:String = Paths.video(name);
+
+		#if sys
+		if (FileSystem.exists(fileName))
+		#else
+		if (OpenFlAssets.exists(fileName))
+		#end
+		foundFile = true;
+
+		if (foundFile)
+		{
+			videoCutscene = new VideoSprite(fileName, forMidSong, canSkip, loop);
+			if(forMidSong) videoCutscene.videoSprite.bitmap.rate = playbackRate;
+
+			// Finish callback
+			if (!forMidSong)
+			{
+				function onVideoEnd()
+				{
+					if (!isDead && generatedMusic && PlayState.SONG.notes[Std.int(curStep / 16)] != null && !endingSong && !isCameraOnForcedPos)
+					{
+						moveCameraSection();
+						FlxG.camera.snapToTarget();
+					}
+					videoCutscene = null;
+					canPause = true;
+					inCutscene = false;
+					startAndEnd();
+				}
+				videoCutscene.finishCallback = onVideoEnd;
+				videoCutscene.onSkip = onVideoEnd;
+			}
+			if (GameOverSubstate.instance != null && isDead) GameOverSubstate.instance.add(videoCutscene);
+			else add(videoCutscene);
+
+			if (playOnLoad)
+				videoCutscene.play();
+			return videoCutscene;
+		}
 
 	var dialogueCount:Int = 0;
 	public var psychDialogue:DialogueBoxPsych;
