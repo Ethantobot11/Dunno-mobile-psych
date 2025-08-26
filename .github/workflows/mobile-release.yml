@@ -1,9 +1,7 @@
 name: Mobile + Release
 on: workflow_dispatch
 
-permissions:
-  contents: write
-  discussions: write
+permissions: write-all   # ✅ caller must allow write perms too
 
 env:
   PROJECT_NAME: PibbyEngine
