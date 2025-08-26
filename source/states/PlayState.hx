@@ -887,6 +887,8 @@ class PlayState extends MusicBeatState
 				videoCutscene.play();
 			return videoCutscene;
 		}
+    #end
+} // 👈 this was missing!
 
 	var dialogueCount:Int = 0;
 	public var psychDialogue:DialogueBoxPsych;
